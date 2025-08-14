@@ -32,4 +32,13 @@ public class OrderServices {
         orep.save(o2);
         return o2;
     }
+
+    public void completedorder(int currentorderid) {
+//        System.out.println();
+        Order o3 = orep.findById(currentorderid).get();
+        o3.setStatus(Boolean.FALSE);
+        o3.setUpdate("Completed");
+        System.out.println(o3);
+        orep.save(o3);
+    }
 }
