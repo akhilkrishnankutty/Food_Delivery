@@ -1,5 +1,6 @@
 package com.example.Food_Restaurant.Service;
 
+import com.example.Food_Restaurant.Kafka.KafkaListner;
 import com.example.Food_Restaurant.Kafka.KafkaProducer;
 import com.example.Food_Restaurant.Models.DeliveryPartner;
 import com.example.Food_Restaurant.Models.Order;
@@ -20,22 +21,23 @@ public class OrderScheduler {
     DeliveryPartnerRepo drepo;
     @Autowired
     KafkaProducer kpp;
+    @Autowired
+    KafkaListner kll;
     @Scheduled(fixedRate = 1000)
     public void scheduler(){
-        List<Order> ors = orp.findByupdate("Ready for pick");
-        List<DeliveryPartner> drs = drepo.findByIsfreeTrueAndActiveTrue();
-        System.out.println(ors);
-        for (Order s:ors){
-            if (!drs.isEmpty()){
-                DeliveryPartner dp2 = drs.remove(0);
+        DeliveryPartner drs = kll.getPartner();
+        if(drs != null &&drs.getIsfree().equals(true)) {
+            List<Order> ors = orp.findByupdate("Ready for pick");
+            for (Order s : ors) {
 //                System.out.println(dp2);
-                kpp.saver(s);
-                dp2.setIsfree(Boolean.FALSE);
-                dp2.setCurrentorderid(s.getRid());
-//                drepo.save(dp2);
+//                kpp.saver(s);
+                drs.setIsfree(Boolean.FALSE);
+                drs.setCurrentorderid(s.getRid());
+//                drepo.save(drs);
                 s.setUpdate("Picked");
 //                orp.save(s);
-                System.out.println("Order"+s.getOid()+ " Assigned to"+dp2.getDpname());
+//                System.out.println("Order"+s.getOid()+ " Assigned to"+drs.getDpname());
+
             }
         }
     }
