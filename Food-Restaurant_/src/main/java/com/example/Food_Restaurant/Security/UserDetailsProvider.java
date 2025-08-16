@@ -22,7 +22,7 @@ public class UserDetailsProvider implements UserDetails {
 
     @Override
     public String getPassword() {
-        return String.valueOf(user.getUphoneno());
+        return user.getUpassword();
     }
 
     @Override
