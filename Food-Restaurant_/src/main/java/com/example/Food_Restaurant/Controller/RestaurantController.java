@@ -7,6 +7,7 @@ import com.example.Food_Restaurant.Service.RestaurantServices;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("res")
+@PreAuthorize("hasRole('Admin')")
 public class RestaurantController {
     @Autowired
     RestaurantServices rservices;

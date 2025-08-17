@@ -2,6 +2,7 @@ package com.example.Food_Restaurant.Controller;
 
 import com.example.Food_Restaurant.Models.DeliveryPartner;
 import com.example.Food_Restaurant.Models.Order;
+import com.example.Food_Restaurant.Models.OrderStatus;
 import com.example.Food_Restaurant.Repo.DeliveryPartnerRepo;
 import com.example.Food_Restaurant.Repo.OrderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class ResetController {
         List<Order> orders = orderRepo.findAll();
         for (Order j:orders){
             j.setStatus(Boolean.TRUE);
-            j.setUpdate("orderd");
+            j.setUpdate(OrderStatus.Orderd);
             orderRepo.save(j);
 
         }

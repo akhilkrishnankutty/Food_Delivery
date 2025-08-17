@@ -21,4 +21,7 @@ public class KafkaProducer {
         kafkaTemplate.send("free_partner",p1);
     }
 
+    public void foodready(Order order){
+        kafkaTemplate.send("order_pickup",order);
+    }
 }

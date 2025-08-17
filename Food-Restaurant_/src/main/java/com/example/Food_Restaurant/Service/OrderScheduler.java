@@ -4,6 +4,7 @@ import com.example.Food_Restaurant.Kafka.KafkaListner;
 import com.example.Food_Restaurant.Kafka.KafkaProducer;
 import com.example.Food_Restaurant.Models.DeliveryPartner;
 import com.example.Food_Restaurant.Models.Order;
+import com.example.Food_Restaurant.Models.OrderStatus;
 import com.example.Food_Restaurant.Repo.DeliveryPartnerRepo;
 import com.example.Food_Restaurant.Repo.OrderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,17 +27,17 @@ public class OrderScheduler {
     @Scheduled(fixedRate = 1000)
     public void scheduler(){
         DeliveryPartner drs = kll.getPartner();
-        if(drs != null &&drs.getIsfree().equals(true)) {
-            List<Order> ors = orp.findByupdate("Ready for pick");
-            for (Order s : ors) {
-//                System.out.println(dp2);
-//                kpp.saver(s);
+        Order o1 = kll.getOrder();
+        if(drs != null &&drs.getIsfree().equals(true) && drs.getActive().equals(true)) {
+//            List<Order> ors = orp.findByupdate(OrderStatus.Ready_to_pick);
+            if(o1 != null && o1.getUpdate()==OrderStatus.Ready_to_pick)
+                 {
                 drs.setIsfree(Boolean.FALSE);
-                drs.setCurrentorderid(s.getRid());
-//                drepo.save(drs);
-                s.setUpdate("Picked");
-//                orp.save(s);
-//                System.out.println("Order"+s.getOid()+ " Assigned to"+drs.getDpname());
+                drs.setCurrentorderid(o1.getOid());
+                drepo.save(drs);
+                o1.setUpdate(OrderStatus.Picked);
+                orp.save(o1);
+                System.out.println("Order"+o1.getOid()+ " Assigned to"+drs.getDpname());
 
             }
         }

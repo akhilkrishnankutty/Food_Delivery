@@ -1,6 +1,8 @@
 package com.example.Food_Restaurant.Service;
 
+import com.example.Food_Restaurant.Kafka.KafkaProducer;
 import com.example.Food_Restaurant.Models.Order;
+import com.example.Food_Restaurant.Models.OrderStatus;
 import com.example.Food_Restaurant.Repo.OrderRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ import static java.util.stream.Collectors.toList;
 public class OrderServices {
     @Autowired
     OrderRepo orep;
+
+    @Autowired
+    KafkaProducer kp1;
 
     public Order neworder(Order o1) {
         return orep.save(o1);
@@ -28,8 +33,9 @@ public class OrderServices {
 
     public Order ready(int id) {
         Order o2 = orep.findById(id).get();
-        o2.setUpdate("Ready for pick");
+        o2.setUpdate(OrderStatus.Ready_to_pick);
         orep.save(o2);
+        kp1.foodready(o2);
         return o2;
     }
 
@@ -37,7 +43,7 @@ public class OrderServices {
 //        System.out.println();
         Order o3 = orep.findById(currentorderid).get();
         o3.setStatus(Boolean.FALSE);
-        o3.setUpdate("Completed");
+        o3.setUpdate(OrderStatus.Completed);
         System.out.println(o3);
         orep.save(o3);
     }

@@ -27,6 +27,7 @@ public class DeliveryPatnerService {
         p2.setIsfree(Boolean.TRUE);
         p2.setCurrentorderid(0) ;
         drepo.save(p2);
+        kp1.Deliverypartnerfree(p2);
         return p2;
     }
 
