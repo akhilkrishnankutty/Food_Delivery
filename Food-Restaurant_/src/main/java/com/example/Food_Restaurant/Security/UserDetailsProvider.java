@@ -12,12 +12,11 @@ import java.util.List;
 public class UserDetailsProvider implements UserDetails {
     private User user;
     public UserDetailsProvider(User user){
-        System.out.println("called me");
         this.user = user;
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_"+user.getRoles().name()));
     }
 
     @Override
