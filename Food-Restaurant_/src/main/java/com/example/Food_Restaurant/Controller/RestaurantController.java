@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("res")
-@PreAuthorize("hasRole('Admin')")
+@PreAuthorize("hasAnyRole('Admin','Restaurant')")
 public class RestaurantController {
     @Autowired
     RestaurantServices rservices;

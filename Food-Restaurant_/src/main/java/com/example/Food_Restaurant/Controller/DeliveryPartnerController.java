@@ -3,10 +3,12 @@ package com.example.Food_Restaurant.Controller;
 import com.example.Food_Restaurant.Models.DeliveryPartner;
 import com.example.Food_Restaurant.Service.DeliveryPatnerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("partner")
+@PreAuthorize("hasAnyRole('Admin','Rider')")
 public class DeliveryPartnerController {
     @Autowired
     DeliveryPatnerService deliveryPatnerService;

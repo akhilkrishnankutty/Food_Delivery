@@ -12,7 +12,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int uid;
     private String uname;
-    private int uphoneno;
+    private Long uphoneno;
     private String upassword;
     @Enumerated(EnumType.STRING)
     private UserRoles roles;
