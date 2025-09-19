@@ -7,6 +7,7 @@ import com.example.Food_Restaurant.Models.Order;
 import com.example.Food_Restaurant.Models.OrderStatus;
 import com.example.Food_Restaurant.Repo.DeliveryPartnerRepo;
 import com.example.Food_Restaurant.Repo.OrderRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
+@Slf4j
 public class OrderScheduler {
 
     @Autowired
@@ -26,6 +28,7 @@ public class OrderScheduler {
     KafkaListner kll;
     @Scheduled(fixedRate = 1000)
     public void scheduler(){
+        log.info("Started");
         DeliveryPartner drs = kll.getPartner();
         Order o1 = kll.getOrder();
         if(drs != null &&drs.getIsfree().equals(true) && drs.getActive().equals(true)) {

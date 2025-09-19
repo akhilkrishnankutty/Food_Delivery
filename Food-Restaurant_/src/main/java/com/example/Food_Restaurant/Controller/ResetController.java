@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+
+//This is to reset all orders to its initial status use only for testing .....
 @RestController
 public class ResetController {
     @Autowired
@@ -30,8 +32,8 @@ public class ResetController {
         List<DeliveryPartner> dps = deliveryPartnerRepo.findAll();
         for (DeliveryPartner dp:dps){
             dp.setCurrentorderid(0);
-            dp.setActive(Boolean.TRUE);
-            dp.setIsfree(Boolean.TRUE);
+            dp.setActive(Boolean.FALSE);
+            dp.setIsfree(Boolean.FALSE);
             deliveryPartnerRepo.save(dp);
         }
     }

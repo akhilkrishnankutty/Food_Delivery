@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
-@PreAuthorize("hasAnyRole('Admin','Customer')")
+//@PreAuthorize("hasAnyRole('Admin','Customer')")
 public class UserController {
     @Autowired
     UserService userService;
